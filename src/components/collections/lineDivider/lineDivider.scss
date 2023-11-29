@@ -1,4 +1,10 @@
-.line-divider{
+.line-divider {
+  margin: 4rem 0;
+  border: 1.5px var(--color-text-primary-25) solid;
+}
+
+@media screen and (min-width: 768px) {
+  .line-divider {
     margin: 6rem 0;
-    border: 1.5px var(--color-text-primary-25) solid;
+  }
 }

@@ -4,8 +4,6 @@
     align-items: center;
 
     &__title{
-        display: flex;
-        flex-direction: column;
         align-self: flex-start;
         font-size: var(--text-md);
         font-weight: 600;
@@ -26,8 +24,6 @@
             flex-direction: row;
             gap: 1.5rem;
             align-self: flex-start;
-            font-size: var(--text-md);
-            font-weight: 600;
         }
     }
 }

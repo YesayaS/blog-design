@@ -11,6 +11,8 @@ export default function HeroPreview() {
                 alt="Picture of a house"
                 fill
                 style={{objectFit:"cover"}}
+                sizes="100vw, (min-width: 768px) 33vw"
+                priority={true}
               />
           </div>
           <div className="hero-preview__detail">

@@ -14,7 +14,7 @@ export default function cardList() {
           <Link href='/'><CardList/></Link>
           <Link href='/'><CardList/></Link>
         </div>
-        <Link href='/'><button className="button__see-more">See More Articles</button></Link>
+        <Link href='/'><button className="button__see-more button-hover">See More Articles</button></Link>
     </div>
   );
 }

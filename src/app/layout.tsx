@@ -21,11 +21,9 @@ export default function RootLayout({
   return (
     <html lang="en">
         <body className={`${rubik.className} ${montserrat.variable}`}>
-        <div className='container'>
           <Header/>
-          <div>{children}</div>
+          <div className='content'>{children}</div>
           <Footer/>
-        </div>
         </body>
     </html>
   )

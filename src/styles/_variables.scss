@@ -1,4 +1,7 @@
 body {
+  // Page
+  --max-page-width: 1200px;
+
   // Color
   --base-color: #f9f9f9;
   --primary-color: #040403;
@@ -6,6 +9,7 @@ body {
   --color-text-primary-90: #04040390;
   --color-text-primary-65: #04040365;
   --color-text-primary-25: #04040325;
+  --color-text-secondary: #f9f9f9;
 
   --account-color: #5b7553;
 

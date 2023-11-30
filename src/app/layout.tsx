@@ -3,6 +3,7 @@ import { Rubik, Montserrat } from 'next/font/google'
 import '../styles/globals.scss'
 
 import Header from '@/src/components/header/header'
+import Footer from '@/src/components/footer/footer'
 
 const rubik = Rubik({ subsets: ['latin'], variable:"--font-rubik"  })
 const montserrat = Montserrat({ subsets: ['latin'], variable:"--font-montserrat" })
@@ -23,6 +24,7 @@ export default function RootLayout({
         <div className='container'>
           <Header/>
           <div>{children}</div>
+          <Footer/>
         </div>
         </body>
     </html>

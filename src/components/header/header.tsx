@@ -1,8 +1,3 @@
-"use client";
-
-import { Montserrat } from 'next/font/google'
-
-
 import "./header.scss";
 
 export default function Header() {

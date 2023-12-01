@@ -4,7 +4,7 @@ import CardList from "@/src/components/preview/cardList";
 
 import './latest.scss'
 
-export default function cardList() {
+export default function Latest() {
   return (
     <div className="latest">
         <h1 className="latest__title">Latest</h1>

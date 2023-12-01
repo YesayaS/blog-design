@@ -1,6 +1,6 @@
 import './lineDivider.scss'
 
-export default function Trending() {
+export default function LineDivider() {
   return (
     <div className="line-divider"/>
   );

@@ -3,16 +3,16 @@ import CommentSection from "./commentSection";
 import OtherArticle from "./otherArticle";
 import Divider from "@/src/components/collections/lineDivider/lineDivider";
 
-import './page.scss'
+import "./page.scss";
 
 export default function Post() {
   return (
     <div className="article-post">
       <ArticlePost />
       <Divider />
-      <CommentSection/>
+      <CommentSection />
       <Divider />
-      <OtherArticle/>
+      <OtherArticle />
     </div>
   );
 }

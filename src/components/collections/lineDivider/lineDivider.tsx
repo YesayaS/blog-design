@@ -1,7 +1,5 @@
-import './lineDivider.scss'
+import "./lineDivider.scss";
 
 export default function LineDivider() {
-  return (
-    <div className="line-divider"/>
-  );
+  return <div className="line-divider" />;
 }

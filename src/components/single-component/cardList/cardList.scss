@@ -4,7 +4,7 @@
   justify-content: space-between;
   width: 100%;
   height: 100%;
-  
+
   &__img {
     position: relative;
     aspect-ratio: 2;
@@ -33,9 +33,9 @@
     }
 
     &__sub-header {
-        padding-block-start: 0.3rem;
-        font-size: var(--text-sm);
-        color: var(--color-text-primary-90);
+      padding-block-start: 0.3rem;
+      font-size: var(--text-sm);
+      color: var(--color-text-primary-90);
     }
 
     &__publish-date {
@@ -52,17 +52,17 @@
     height: fit-content;
 
     &__img {
-        width: 40%;
-        position: relative;
-        aspect-ratio: 2;
+      width: 40%;
+      position: relative;
+      aspect-ratio: 2;
     }
 
     &__detail {
-        width: 60%;
+      width: 60%;
 
-        &__author {
-            padding-block-start: 0rem;
-        }
+      &__author {
+        padding-block-start: 0rem;
+      }
     }
   }
 }

@@ -1,17 +1,17 @@
-.follow-socials{
+.follow-socials {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+
+  .follow-text {
+    font-size: var(--text-md);
+  }
+
+  .follow-logos {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     gap: 2rem;
-
-    .follow-text{
-        font-size: var(--text-md);
-    }
-
-    .follow-logos{
-        display: flex;
-        gap: 2rem;
-        font-size: 24px;
-    }
+    font-size: 24px;
+  }
 }

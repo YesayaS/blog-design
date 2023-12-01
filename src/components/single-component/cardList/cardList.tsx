@@ -1,11 +1,11 @@
 import Image from "next/image";
-import Link from "next/link"
+import Link from "next/link";
 
 import "./cardList.scss";
 
 export default function CardList() {
   return (
-    <Link href='/post/1'>
+    <Link href="/post/1">
       <div className="card-list">
         <div className="card-list__img">
           <Image

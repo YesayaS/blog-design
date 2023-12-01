@@ -4,18 +4,18 @@ import Divider from "@/src/components/collections/lineDivider/lineDivider";
 import BeAuthor from "@/src/components/collections/beAuthor/beAuthor";
 import FollowSocials from "@/src/components/collections/followSocials/followSocials";
 
-import './home.scss'
+import "./home.scss";
 
 export default function Home() {
   return (
     <div className="home">
       <Trending />
       <Divider />
-      <Latest/>
+      <Latest />
       <Divider />
-      <BeAuthor/>
+      <BeAuthor />
       <Divider />
-      <FollowSocials/>
+      <FollowSocials />
     </div>
   );
 }

@@ -1,29 +1,29 @@
-.trending{
+.trending {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+
+  &__title {
+    align-self: flex-start;
+    font-size: var(--text-lg);
+    font-weight: 600;
+  }
+
+  &__hero {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 2rem;
-
-    &__title{
-        align-self: flex-start;
-        font-size: var(--text-lg);
-        font-weight: 600;
-    }
-
-    &__hero{
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-    }
+  }
 }
 
 @media screen and (min-width: 768px) {
-    .trending{
-        &__hero{
-            display: flex;
-            flex-direction: row;
-            gap: 1.5rem;
-            align-self: flex-start;
-        }
+  .trending {
+    &__hero {
+      display: flex;
+      flex-direction: row;
+      gap: 1.5rem;
+      align-self: flex-start;
     }
+  }
 }

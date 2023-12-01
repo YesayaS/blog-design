@@ -1,15 +1,15 @@
-.home{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem 2rem;
-    padding-bottom: 6rem;
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 2rem;
+  padding-bottom: 6rem;
 }
 
 @media screen and (min-width: 768px) {
-    .home{
-        max-width: var(--max-page-width);
-        padding: 2rem 1rem;
-        padding-bottom: 6rem;
-    }
+  .home {
+    max-width: var(--max-page-width);
+    padding: 2rem 1rem;
+    padding-bottom: 6rem;
+  }
 }

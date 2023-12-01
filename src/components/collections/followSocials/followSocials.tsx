@@ -14,19 +14,19 @@ export default function FollowSocials() {
       <div className="follow-text"> Follow us on socials </div>
       <div className="follow-logos">
         <a href="">
-            <IoLogoYoutube />
+          <IoLogoYoutube />
         </a>
         <a href="">
-            <IoLogoTwitter />
+          <IoLogoTwitter />
         </a>
         <a href="">
-            <IoLogoTiktok />
+          <IoLogoTiktok />
         </a>
         <a href="">
-            <IoLogoInstagram />
+          <IoLogoInstagram />
         </a>
         <a href="">
-            <IoLogoFacebook />
+          <IoLogoFacebook />
         </a>
       </div>
     </div>

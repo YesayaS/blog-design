@@ -8,32 +8,32 @@
   }
   &__detail {
     padding-left: 0.2rem;
-      .truncate {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: normal;
-      }
+    .truncate {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: normal;
+    }
 
     &__author {
       padding-block-start: 0.8rem;
       font-size: var(--text-xs);
     }
-    
+
     &__header {
       padding-block-start: 0.8rem;
       font-size: var(--text-md);
       font-weight: 600;
     }
-    
+
     &__sub-header {
       padding-block-start: 0.3rem;
       font-size: var(--text-sm);
       color: var(--color-text-primary-90);
     }
-    
+
     &__publish-date {
       padding-block-start: 0.8rem;
       font-size: var(--text-xs);

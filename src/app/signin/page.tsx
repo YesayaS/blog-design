@@ -61,20 +61,21 @@ export default function Home() {
                 Sign Up
               </button>
             )}
-              {signType === "signup" ? (
-            <p>
-              Don&#39;t have an account? &nbsp;
+            {signType === "signup" ? (
+              <p>
+                Don&#39;t have an account? &nbsp;
                 <Link href="#" onClick={() => setsignType("signin")}>
                   Sign in
                 </Link>
-            </p>
-              ) : (
-                <p>
-              Already have an account? &nbsp;
+              </p>
+            ) : (
+              <p>
+                Already have an account? &nbsp;
                 <Link href="#" onClick={() => setsignType("signup")}>
                   Sign up
-                </Link></p>
-              )}
+                </Link>
+              </p>
+            )}
           </form>
         </div>
       </div>

@@ -11,7 +11,9 @@ export default function BeAuthor() {
         <p className="be-author__detail__sub-head">
           Lorem Ipsum Lorem impsum Lorem Ipsum lorem ipsum
         </p>
-        <button className="be-author__detail__button button-hover">Click Here</button>
+        <button className="be-author__detail__button button-hover">
+          Click Here
+        </button>
       </h1>
       <div className="be-author__img">
         <Image

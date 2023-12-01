@@ -7,7 +7,7 @@ import "./header.scss";
 
 
 export default function Header() {
-  const nonShown = ['/login', '/signup']
+  const nonShown = ['/signin']
 
   const pathname = usePathname()
   
@@ -24,7 +24,7 @@ export default function Header() {
             <a href="">Our Story</a>
             <a href="">Write</a>
         </div>
-        <Link className="account" href='/login'>
+        <Link className="account" href='/signin'>
           Log in
         </Link>
       </div>

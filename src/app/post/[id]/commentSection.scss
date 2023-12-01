@@ -1,0 +1,19 @@
+.comment-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    padding: 0rem 2rem;
+
+    &__header{
+        font-size: var(--text-lg);
+        font-weight: 600;
+    }
+
+    &__comments{
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        width: 100%;
+    }
+}

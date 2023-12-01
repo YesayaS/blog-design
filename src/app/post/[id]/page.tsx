@@ -7,6 +7,8 @@ export default function Post() {
     <div>
       <ArticlePost />
       <Divider />
+      <CommentSection/>
+      <Divider />
     </div>
   );
 }

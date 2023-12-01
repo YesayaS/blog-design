@@ -4,6 +4,7 @@ body {
 
   // Color
   --base-color: #f9f9f9;
+  --color-base70: #F9F9F970;
   --primary-color: #040403;
   --color-text-primary: #040403;
   --color-text-primary-90: #04040390;
@@ -32,4 +33,6 @@ body {
   --text-4xl: calc(var(--text-3xl) * var(--text-scale-ratio));
   --text-5xl: calc(var(--text-4xl) * var(--text-scale-ratio));
   --text-6xl: calc(var(--text-5xl) * var(--text-scale-ratio));
+  --text-7xl: calc(var(--text-6xl) * var(--text-scale-ratio));
+  --text-8xl: calc(var(--text-7xl) * var(--text-scale-ratio));
 }

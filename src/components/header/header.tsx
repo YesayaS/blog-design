@@ -1,18 +1,30 @@
-import "./header.scss";
-
+'use client'
+ 
+import { usePathname } from 'next/navigation'
 import Link from "next/link";
 
+import "./header.scss";
+
+
 export default function Header() {
+  const nonShown = ['/login', '/signup']
+
+  const pathname = usePathname()
+  
+  if (nonShown.includes(pathname)){
+    return
+  }
+  
   return (
     <header className="header">
       <div className="header__wrapper">
-        <div className="logo" >Logo</div>
+        <Link className="logo" href="/">Logo</Link>
         <div className="navbar">
             <a href="">Latest</a>
             <a href="">Our Story</a>
             <a href="">Write</a>
         </div>
-        <Link className="account" href='#'>
+        <Link className="account" href='/login'>
           Log in
         </Link>
       </div>

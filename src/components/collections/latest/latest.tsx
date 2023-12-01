@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import CardList from "@/src/components/preview/cardList";
+import CardList from "@/src/components/single-component/cardList/cardList";
 
 import './latest.scss'
 

@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import './heroPreview.scss'
+import './hero.scss'
 
 export default function HeroPreview() {
     return (

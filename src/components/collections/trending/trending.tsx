@@ -1,4 +1,4 @@
-import HeroPreview from "@/src/components/preview/heroPreview";
+import HeroPreview from "@/src/components/single-component/hero/hero";
 import Link from 'next/link'
 
 import './trending.scss'

@@ -1,15 +1,15 @@
 import Image from "next/image";
 
-import "./post.scss";
+import "./article.scss";
 
-export default function Post() {
+export default function Article() {
   return (
-    <div className="post">
-      <div className="post__header">Post Header</div>
-      <div className="post__sub-header">Post sub Header</div>
-      <div className="post__author">Post author</div>
-      <div className="post__publish-date">2 Nov 23</div>
-      <div className="post__img">
+    <div className="article">
+      <div className="article__header">Article Header</div>
+      <div className="article__sub-header">Article sub Header</div>
+      <div className="article__author">Article author</div>
+      <div className="article__publish-date">2 Nov 23</div>
+      <div className="article__img">
         <Image
           src="https://images.pexels.com/photos/323772/pexels-photo-323772.jpeg?auto=compress&cs=tinysrgb&h=350"
           alt="Picture of a house"
@@ -18,7 +18,7 @@ export default function Post() {
           sizes="100vw"
         />
       </div>
-      <div className="post__content">
+      <div className="article__content">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
         scelerisque ante in enim efficitur fringilla. Proin ullamcorper erat vel
         metus hendrerit, ut bibendum velit varius. Integer sed risus nec nunc

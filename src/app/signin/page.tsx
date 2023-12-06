@@ -1,25 +1,40 @@
 "use client";
 
+import "dotenv/config";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { motion } from "framer-motion";
+import useSignin from "@@/hook/useSignin";
 
 import "./signin.scss";
 
-export default function Home() {
-  const [signType, setsignType] = useState("signin");
-
-  const show = {
-    opacity: 1,
-    display: "block",
+export default function SignIn(this: any) {
+  const defaultForm = {
+    username: "",
+    password: "",
+    confirmPassword: "",
   };
 
-  const hide = {
-    opacity: 0,
-    transitionEnd: {
-      display: "none",
-    },
+  const [signType, setSignType] = useState("login");
+  const [formData, setFormData] = useState(defaultForm);
+  const [error, setError] = useState("");
+
+  const { login, signup } = useSignin();
+
+  const handleInputChange = (e: any) => {
+    const { name, value } = e.target;
+
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
+
+  async function handleSubmit(e: any) {
+    e.preventDefault();
+    if (signType === "login") login(formData);
+    setFormData(defaultForm);
+  }
 
   return (
     <div className="signin">
@@ -31,49 +46,71 @@ export default function Home() {
           <div className="signin__text">Lorem Ipsum Lorem Ipsum Lorem</div>
         </div>
         <div className="signin__right-side">
-          <form className="signin__form" method="POST" action="">
+          <form className="signin__form" onSubmit={handleSubmit}>
             <input
               className="signin__input-text"
               name="username"
               type="text"
               placeholder="Username"
+              required={true}
+              value={formData.username}
+              onChange={handleInputChange}
             />
             <input
               className="signin__input-text"
               name="password"
-              type="text"
+              type="password"
               placeholder="Password"
+              required={true}
+              value={formData.password}
+              onChange={handleInputChange}
             />
             {signType === "signup" && (
               <input
                 className="signin__input-text"
-                name="password"
-                type="text"
+                name="confirmPassword"
+                type="password"
                 placeholder="Confirm Password"
+                required={true}
+                value={formData.confirmPassword}
+                onChange={handleInputChange}
               />
             )}
-            {signType === "signin" ? (
-              <button className="signin__log-in" type="reset">
+            {signType === "login" ? (
+              <button id="log-in" className="signin__submit" type="submit">
                 Log in
               </button>
             ) : (
-              <button className="signin__log-in" type="reset">
+              <button id="sign-up" className="signin__submit" type="submit">
                 Sign Up
               </button>
             )}
-            {signType === "signup" ? (
+            {error ? <p className="error-text">{error}</p> : ""}
+            {signType === "login" ? (
               <p>
-                Don&#39;t have an account? &nbsp;
-                <Link href="#" onClick={() => setsignType("signin")}>
-                  Sign in
-                </Link>
+                Already have an account? &nbsp;
+                <a
+                  href="#"
+                  onClick={() => {
+                    setSignType("signup");
+                    setError("");
+                  }}
+                >
+                  Sign up
+                </a>
               </p>
             ) : (
               <p>
-                Already have an account? &nbsp;
-                <Link href="#" onClick={() => setsignType("signup")}>
-                  Sign up
-                </Link>
+                Don&#39;t have an account? &nbsp;
+                <a
+                  href="#"
+                  onClick={() => {
+                    setSignType("login");
+                    setError("");
+                  }}
+                >
+                  Sign in
+                </a>
               </p>
             )}
           </form>

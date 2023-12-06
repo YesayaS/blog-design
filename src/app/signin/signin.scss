@@ -45,7 +45,8 @@
       border-radius: 4px;
     }
 
-    input[type="text"] {
+    input[type="text"],
+    input[type="password"] {
       padding: 0rem 0.8rem;
       font-size: var(--text-sm);
       background-color: var(--base-color);
@@ -58,12 +59,19 @@
     }
 
     p {
-      padding-top: 2rem;
       color: var(--color-text-primary-65);
 
       a {
         color: #0000ff;
       }
+    }
+
+    p:last-child {
+      padding-top: 2rem;
+    }
+
+    .error-text {
+      color: red;
     }
   }
 }

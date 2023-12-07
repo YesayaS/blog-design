@@ -1,11 +1,13 @@
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { API_ENDPOINT } from "@@/utils/api";
+import useAuth from "@@/hooks/useAuth";
 
 export default function SignInForm() {
   const LOGIN = "login";
   const SIGNUP = "signup";
   const router = useRouter();
+  const { authLogin } = useAuth();
 
   const defaultForm = {
     username: "",
@@ -40,7 +42,7 @@ export default function SignInForm() {
     url: string,
     method: string,
     data: object,
-    successCallback: () => void,
+    isLogin: boolean,
   ) => {
     try {
       const response = await fetch(url, {
@@ -59,7 +61,14 @@ export default function SignInForm() {
         }
         throw new Error(`${response.status}`);
       }
-      successCallback();
+
+      if (isLogin) {
+        const token = responseMessage.token;
+        authLogin(token);
+        router.push("/");
+      } else {
+        setSignType(LOGIN);
+      }
     } catch (error: any) {
       console.error(error);
     }
@@ -89,14 +98,15 @@ export default function SignInForm() {
 
     if (signType === LOGIN) {
       const { username, password } = formData;
-      await makeApiRequest(
+
+      makeApiRequest(
         `${API_ENDPOINT}/login`,
         "POST",
         {
           username,
           password,
         },
-        () => router.push("/"),
+        true,
       );
     } else {
       const isFormValid = validateForm();
@@ -114,7 +124,7 @@ export default function SignInForm() {
           password,
           confirmPassword,
         },
-        () => setSignType(LOGIN),
+        false,
       );
     }
   }

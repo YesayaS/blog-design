@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Rubik, Montserrat } from "next/font/google";
 import "../styles/globals.scss";
 
+import { AuthProvider } from "../context/authContext";
+
 import Header from "@/src/components/header/header";
 import Footer from "@/src/components/footer/footer";
 
@@ -24,9 +26,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${rubik.className} ${montserrat.variable}`}>
-        <Header />
-        <div className="content">{children}</div>
-        <Footer />
+        <AuthProvider>
+          <Header />
+          <div className="content">{children}</div>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

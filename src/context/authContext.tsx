@@ -10,6 +10,14 @@ const AuthContext = createContext<any | null>(null);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<types.User | null>(null);
 
+  useEffect(() => {
+    const jwtCookieToken = token();
+    if (jwtCookieToken) {
+      const { username } = decodeToken(jwtCookieToken);
+      setUser({ username });
+    }
+  }, []);
+
   const decodeToken = (token: string) => {
     const decode: types.JWTToken = jwtDecode(token);
     const username = decode.username;
@@ -33,6 +41,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const authLogout = () => {
     Cookies.remove("jwtToken");
     setUser(null);
+    return true;
   };
 
   const value = { user, setUser, token, authLogin, authLogout };

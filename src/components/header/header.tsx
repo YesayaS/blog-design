@@ -3,14 +3,17 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
+import SignedIn from "./accountSignedIn";
+
 import "./header.scss";
 
 export default function Header() {
-  const nonShown = ["/signin"];
+  const toHideHeaderPath = ["/signin"];
 
   const pathname = usePathname();
 
-  if (nonShown.includes(pathname)) {
+  // don't show header if path included in array
+  if (toHideHeaderPath.includes(pathname)) {
     return;
   }
 
@@ -25,9 +28,7 @@ export default function Header() {
           <a href="">Our Story</a>
           <a href="">Write</a>
         </div>
-        <Link className="account" href="/signin">
-          Log in
-        </Link>
+        <SignedIn />
       </div>
     </header>
   );

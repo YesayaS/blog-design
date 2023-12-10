@@ -14,8 +14,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const jwt = loadjwt();
     if (jwt) {
-      const { user }: { user: types.User } = jwtDecode(jwt);
-      setUser(user);
+      const username: types.User = jwtDecode(jwt);
+      setUser(username);
     }
   }, [token]);
 

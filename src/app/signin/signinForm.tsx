@@ -73,7 +73,7 @@ export default function SignInForm() {
       if (error) setError(error.error);
 
       if (response) {
-        authLogin();
+        authLogin(response.token);
         router.push("/");
       }
     } else {

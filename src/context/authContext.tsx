@@ -9,37 +9,27 @@ const AuthContext = createContext<any | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<types.User | null>(null);
+  const [token, setToken] = useState<any>(null);
 
   useEffect(() => {
-    const jwtCookieToken = token();
-    if (jwtCookieToken) {
-      const { username } = decodeToken(jwtCookieToken);
-      setUser({ username });
+    const jwt = loadjwt();
+    if (jwt) {
+      const { user }: { user: types.User } = jwtDecode(jwt);
+      setUser(user);
     }
-  }, []);
+  }, [token]);
 
-  const decodeToken = (token: string) => {
-    const decode: types.JWTToken = jwtDecode(token);
-    const username = decode.username;
-    return { username };
-  };
-
-  const token = () => {
-    const jwtToken = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("jwtToken="))
-      ?.split("=")[1];
-    return jwtToken;
+  const loadjwt = () => {
+    return Cookies.get("jwt");
   };
 
   const authLogin = (token: string) => {
-    Cookies.set("jwtToken", token, { expires: 1 }); // expires in x day
-    const { username } = decodeToken(token);
-    setUser({ username });
+    setToken(token);
+    Cookies.set("jwt", token);
   };
 
   const authLogout = () => {
-    Cookies.remove("jwtToken");
+    Cookies.remove("jwt");
     setUser(null);
     return true;
   };

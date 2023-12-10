@@ -11,7 +11,11 @@ import "./signin.scss";
 export default function SignIn(this: any) {
   const router = useRouter();
   const { token } = useAuth();
-  if (token) router.push("/");
+  if (token) {
+    setTimeout(() => {
+      router.push("/");
+    }, 1000);
+  }
 
   return (
     <div className="signin">

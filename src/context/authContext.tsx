@@ -30,6 +30,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const authLogout = () => {
     Cookies.remove("jwt");
+    setToken(null);
     setUser(null);
     return true;
   };

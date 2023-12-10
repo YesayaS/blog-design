@@ -1,13 +1,18 @@
 "use client";
 
-import "dotenv/config";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
+import useAuth from "@@/hooks/useAuth";
 import SignInForm from "./signinForm";
 
 import "./signin.scss";
 
 export default function SignIn(this: any) {
+  const router = useRouter();
+  const { token } = useAuth();
+  if (token) router.push("/");
+
   return (
     <div className="signin">
       <div className="signin__wrapper">

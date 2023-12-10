@@ -26,7 +26,7 @@ export default function Header() {
         <div className="navbar">
           <a href="">Latest</a>
           <a href="">Our Story</a>
-          <a href="">Write</a>
+          <Link href="/post/create">Write</Link>
         </div>
         <SignedIn />
       </div>

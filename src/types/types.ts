@@ -1,5 +1,5 @@
 export interface User {
-  username: string;
+  user: { username: string };
 }
 
 export interface JWTToken {

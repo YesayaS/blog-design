@@ -3,6 +3,7 @@
   border-bottom: 1px var(--primary-color) solid;
   display: flex;
   justify-content: center;
+  min-height: 6.5rem;
 
   &__wrapper {
     width: 100%;
@@ -80,6 +81,8 @@
 
 @media screen and (min-width: 768px) {
   .header {
+    min-height: 3.5rem;
+
     &__wrapper {
       width: 100%;
       max-width: var(--max-page-width);

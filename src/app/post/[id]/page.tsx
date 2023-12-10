@@ -50,7 +50,7 @@ export default function Post() {
   return (
     <div className="article-post">
       <PostContext.Provider value={postData}>
-        <Article />
+        <Article post={postData} />
         <Divider />
         <CommentSection />
         <Divider />

@@ -1,11 +1,9 @@
-import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import fetchAPI from "@/src/utils/fetchAPI";
 import useAuth from "@@/hooks/useAuth";
 
 export default function SignInForm() {
   const { authLogin } = useAuth();
-  const router = useRouter();
 
   const [error, setError] = useState<string | null>(null);
   const [isSignin, setIsSignin] = useState(true);
@@ -65,7 +63,6 @@ export default function SignInForm() {
           username: formData.username,
           password: formData.password,
         }),
-        credentials: "include",
       };
 
       const { response, error } = await fetchAPI("/login", options);
@@ -74,7 +71,6 @@ export default function SignInForm() {
 
       if (response) {
         authLogin(response.token);
-        router.push("/");
       }
     } else {
       const isValid = validateForm();

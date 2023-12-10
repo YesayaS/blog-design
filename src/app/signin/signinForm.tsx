@@ -1,33 +1,28 @@
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { API_ENDPOINT } from "@@/utils/api";
+import fetchAPI from "@/src/utils/fetchAPI";
 import useAuth from "@@/hooks/useAuth";
 
 export default function SignInForm() {
-  const LOGIN = "login";
-  const SIGNUP = "signup";
-  const router = useRouter();
   const { authLogin } = useAuth();
+  const router = useRouter();
 
-  const defaultForm = {
+  const [error, setError] = useState<string | null>(null);
+  const [isSignin, setIsSignin] = useState(true);
+  const [formData, setFormData] = useState({
     username: "",
     password: "",
-    confirmPassword: "",
-  };
-
-  const [signType, setSignType] = useState(LOGIN);
-  const [formData, setFormData] = useState(defaultForm);
-  const [error, setError] = useState("");
+    confirm_password: "",
+  });
 
   useEffect(() => {
-    const defaultForm = {
+    setFormData({
       username: "",
       password: "",
-      confirmPassword: "",
-    };
-    setFormData(defaultForm);
-    setError("");
-  }, [signType]);
+      confirm_password: "",
+    });
+    setError(null);
+  }, [isSignin]);
 
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
@@ -36,42 +31,6 @@ export default function SignInForm() {
       ...formData,
       [name]: value,
     });
-  };
-
-  const makeApiRequest = async (
-    url: string,
-    method: string,
-    data: object,
-    isLogin: boolean,
-  ) => {
-    try {
-      const response = await fetch(url, {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      const responseMessage = await response.json();
-
-      if (!response.ok) {
-        if (response.status === 401 || response.status === 409) {
-          setError(responseMessage.error);
-        }
-        throw new Error(`${response.status}`);
-      }
-
-      if (isLogin) {
-        const token = responseMessage.token;
-        authLogin(token);
-        router.push("/");
-      } else {
-        setSignType(LOGIN);
-      }
-    } catch (error: any) {
-      console.error(error);
-    }
   };
 
   const validateForm = () => {
@@ -85,7 +44,7 @@ export default function SignInForm() {
       return false;
     }
 
-    if (formData.password !== formData.confirmPassword) {
+    if (formData.password !== formData.confirm_password) {
       setError("Password and Confirm password do not match");
       return false;
     }
@@ -96,36 +55,49 @@ export default function SignInForm() {
   async function handleSubmit(e: any) {
     e.preventDefault();
 
-    if (signType === LOGIN) {
-      const { username, password } = formData;
-
-      makeApiRequest(
-        `${API_ENDPOINT}/login`,
-        "POST",
-        {
-          username,
-          password,
+    if (isSignin) {
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-        true,
-      );
-    } else {
-      const isFormValid = validateForm();
+        body: JSON.stringify({
+          username: formData.username,
+          password: formData.password,
+        }),
+        credentials: "include",
+      };
 
-      if (!isFormValid) {
-        return console.error(new Error("400"));
+      const { response, error } = await fetchAPI("/login", options);
+
+      if (error) setError(error.error);
+
+      if (response) {
+        authLogin();
+        router.push("/");
       }
+    } else {
+      const isValid = validateForm();
 
-      const { username, password, confirmPassword } = formData;
-      makeApiRequest(
-        `${API_ENDPOINT}/signup`,
-        "POST",
-        {
-          username,
-          password,
-          confirmPassword,
-        },
-        false,
-      );
+      if (isValid) {
+        const options = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: formData.username,
+            password: formData.password,
+            confirm_password: formData.confirm_password,
+          }),
+        };
+
+        const { response, error } = await fetchAPI("/signup", options);
+
+        if (error) setError(error.error);
+
+        if (response) setIsSignin(true);
+      }
     }
   }
 
@@ -151,22 +123,22 @@ export default function SignInForm() {
         value={formData.password}
         onChange={handleInputChange}
       />
-      {signType === SIGNUP && (
+      {!isSignin && (
         <>
-          <label htmlFor="confirmPassword">Confirm Password</label>
+          <label htmlFor="confirm_password">Confirm Password</label>
           <input
             className="signin__input-text"
-            name="confirmPassword"
+            name="confirm_password"
             type="password"
             placeholder="Confirm Password"
             required={true}
-            value={formData.confirmPassword}
+            value={formData.confirm_password}
             onChange={handleInputChange}
           />
         </>
       )}
 
-      {signType === LOGIN ? (
+      {isSignin ? (
         <button id="log-in" className="signin__submit" type="submit">
           Log in
         </button>
@@ -176,16 +148,15 @@ export default function SignInForm() {
         </button>
       )}
 
-      {error ? <p className="error-text">{error}</p> : ""}
+      {error && <p className="error-text">{error}</p>}
 
-      {signType === LOGIN ? (
+      {isSignin ? (
         <p>
           Already have an account? &nbsp;
           <a
             href="#"
             onClick={() => {
-              setSignType(SIGNUP);
-              setError("");
+              setIsSignin(false);
             }}
           >
             Sign up
@@ -197,8 +168,7 @@ export default function SignInForm() {
           <a
             href="#"
             onClick={() => {
-              setSignType(LOGIN);
-              setError("");
+              setIsSignin(true);
             }}
           >
             Sign in

@@ -2,20 +2,16 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 import useAuth from "@@/hooks/useAuth";
+import useRedirectProtectedRoutes from "@/src/hooks/useRedirectProtectedRoutes";
 import SignInForm from "./signinForm";
 
 import "./signin.scss";
 
 export default function SignIn(this: any) {
-  const router = useRouter();
-  const { token } = useAuth();
-  if (token) {
-    setTimeout(() => {
-      router.push("/");
-    }, 1000);
-  }
+  useRedirectProtectedRoutes(true, "/");
 
   return (
     <div className="signin">

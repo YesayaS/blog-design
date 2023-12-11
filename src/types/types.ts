@@ -3,7 +3,7 @@ export interface User {
 }
 
 export interface JWTToken {
-  user: User;
+  username: string;
   ia: number;
   exp: number;
 }

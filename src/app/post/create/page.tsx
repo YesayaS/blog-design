@@ -1,11 +1,12 @@
 "use client";
 
 import { createContext, useEffect, useState } from "react";
-import { redirect } from "next/navigation";
-// import { DateTime } from "luxon";
 
+import useRedirectUserExist from "@/src/hooks/useRedirectProtectedRoutes";
 import ArticlePreview from "@@/app/post/[id]/article";
 import useAuth from "@@/hooks/useAuth";
+import { API_ENDPOINT } from "@@/utils/apis";
+import fetchAPI from "@@/utils/fetchAPI";
 
 import "./create.scss";
 
@@ -18,13 +19,9 @@ interface Post {
   publication_date: string;
 }
 
-// function getCurrentDateISO(): string {
-//   return new Date().toISOString();
-// }
-
 export default function CreatePost() {
-  // const router = useRouter();
-  const { token, user } = useAuth();
+  useRedirectUserExist(false, "/signin");
+  const { user, loadjwt } = useAuth();
 
   const [textareaHeight, setTextareaHeight] = useState("auto");
 
@@ -34,29 +31,14 @@ export default function CreatePost() {
   const [content, setContent] = useState<string>("");
   const [isPublish, setisPublish] = useState<boolean>(true);
 
-  // const [currentDate, setCurrentDate] = useState<string>(
-  //   now.toFormat("MMM dd, yyyy"),
-  // );
-
-  // if (!user) {
-  //   return redirect("/signin");
-  // }
-
-  const postPreview = {
-    title: title,
-    sub_title: subTitle,
-    title_img: titleImg,
-    content: content,
-    author: { username: user.username },
-    publication_date: "zzz", // CHANGE HERE
-  };
-
-  if (!postPreview) return <></>;
+  const [author, setAuthor] = useState(user);
+  const [currentDate, setCurrentDate] = useState(new Date().toISOString());
 
   const handleInputChange = (e: any, setStateFunction: Function) => {
     setTextareaHeight("auto");
     setTextareaHeight(`${e.target.scrollHeight}px`);
 
+    // Automatically adjust textbox height to its content
     if (e.target.tagName.toLowerCase() === "textarea") {
       // Calculate the number of rows based on the content
       const rows = e.target.value.split("\n").length;
@@ -83,36 +65,33 @@ export default function CreatePost() {
       ispublished: isPublish,
     };
 
+    const apiPath = "/post";
+    const jwt = loadjwt();
     const requestOptions: RequestInit = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token},`,
+        Authorization: `Bearer ${jwt}`,
       },
       body: JSON.stringify(body),
     };
 
-    try {
-      const response = await fetch("http://localhost:3000/api/post", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(body),
-      });
+    const { response, error } = await fetchAPI(apiPath, requestOptions);
+    if (error) console.error(error);
+    if (response) console.log(response);
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
+    // try {
+    //   const response = await fetch(apiPath, requestOptions);
 
-      // Handle successful response here
-      const result = await response.json();
-      console.log(result);
-    } catch (error) {
-      // Handle fetch errors or response errors here
-      console.error("Fetch error:", error);
-    }
+    //   if (!response.ok) {
+    //     throw new Error(`HTTP error! Status: ${response.status}`);
+    //   }
+
+    //   const result = await response.json();
+    //   console.log(result);
+    // } catch (error) {
+    //   console.error("Fetch error:", error);
+    // }
   }
 
   return (
@@ -182,7 +161,7 @@ export default function CreatePost() {
       <div className="create-post__preview-wrapper">
         <h1 className="create-post__preview-wrapper__header">Preview</h1>
         <div className="create-post__preview-wrapper container-border">
-          <ArticlePreview post={postPreview} />
+          {/* <ArticlePreview post={postPreview} /> */}
         </div>
       </div>
     </div>

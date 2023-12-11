@@ -13,10 +13,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const jwt = loadjwt();
-    if (logged && jwt) {
+
+    if (jwt) {
       const decodeJWT: types.JWTToken = jwtDecode(jwt);
       const user = { username: decodeJWT.username };
       setUser(user);
+      setlogged(true);
     } else {
       setUser(null);
     }

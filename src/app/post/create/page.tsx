@@ -7,6 +7,7 @@ import ArticlePreview from "@@/app/post/[id]/article";
 import useAuth from "@@/hooks/useAuth";
 import { API_ENDPOINT } from "@@/utils/apis";
 import fetchAPI from "@@/utils/fetchAPI";
+import { ROUTES } from "@@/utils/routes";
 
 import "./create.scss";
 
@@ -20,7 +21,7 @@ interface Post {
 }
 
 export default function CreatePost() {
-  useRedirectUserExist(false, "/signin");
+  useRedirectUserExist(false, ROUTES.SIGNIN);
   const { user, loadjwt } = useAuth();
 
   const [textareaHeight, setTextareaHeight] = useState("auto");
@@ -79,19 +80,6 @@ export default function CreatePost() {
     const { response, error } = await fetchAPI(apiPath, requestOptions);
     if (error) console.error(error);
     if (response) console.log(response);
-
-    // try {
-    //   const response = await fetch(apiPath, requestOptions);
-
-    //   if (!response.ok) {
-    //     throw new Error(`HTTP error! Status: ${response.status}`);
-    //   }
-
-    //   const result = await response.json();
-    //   console.log(result);
-    // } catch (error) {
-    //   console.error("Fetch error:", error);
-    // }
   }
 
   return (

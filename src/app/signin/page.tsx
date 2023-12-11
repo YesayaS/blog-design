@@ -7,11 +7,12 @@ import { useEffect } from "react";
 import useAuth from "@@/hooks/useAuth";
 import useRedirectProtectedRoutes from "@/src/hooks/useRedirectProtectedRoutes";
 import SignInForm from "./signinForm";
+import { ROUTES } from "@@/utils/routes";
 
 import "./signin.scss";
 
 export default function SignIn(this: any) {
-  useRedirectProtectedRoutes(true, "/");
+  useRedirectProtectedRoutes(true, ROUTES.ROOT);
 
   return (
     <div className="signin">

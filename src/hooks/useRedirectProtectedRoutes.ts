@@ -5,15 +5,15 @@ import useAuth from "@@/hooks/useAuth";
 
 export default function useRedirectProtectedRoutes(
   userExist: boolean,
-  redirectPath: string,
+  redirectRoutes: string,
 ) {
   const router = useRouter();
   const { user } = useAuth();
   useEffect(() => {
     if (userExist && user) {
-      setTimeout(() => router.push(redirectPath), 1000);
+      setTimeout(() => router.push(redirectRoutes), 1000);
     } else if (!userExist && !user) {
-      setTimeout(() => router.push(redirectPath), 1000);
+      setTimeout(() => router.push(redirectRoutes), 1000);
     }
-  }, [user, router, userExist, redirectPath]);
+  }, [user, router, userExist, redirectRoutes]);
 }

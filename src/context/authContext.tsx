@@ -9,33 +9,36 @@ const AuthContext = createContext<any | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<types.User | null>(null);
-  const [token, setToken] = useState<any>(null);
+  const [logged, setlogged] = useState<boolean>(false);
 
   useEffect(() => {
     const jwt = loadjwt();
-    if (jwt) {
-      const username: types.User = jwtDecode(jwt);
-      setUser(username);
+    if (logged && jwt) {
+      const decodeJWT: types.JWTToken = jwtDecode(jwt);
+      const user = { username: decodeJWT.username };
+      setUser(user);
+    } else {
+      setUser(null);
     }
-  }, [token]);
+  }, [logged]);
 
   const loadjwt = () => {
     return Cookies.get("jwt");
   };
 
   const authLogin = (token: string) => {
-    setToken(token);
+    setlogged(true);
     Cookies.set("jwt", token);
   };
 
   const authLogout = () => {
     Cookies.remove("jwt");
-    setToken(null);
+    setlogged(false);
     setUser(null);
     return true;
   };
 
-  const value = { user, setUser, token, authLogin, authLogout };
+  const value = { user, setUser, authLogin, authLogout, loadjwt };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

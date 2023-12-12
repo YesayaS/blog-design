@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useEffect, useState } from "react";
+import { ChangeEvent, createContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import useRedirectUserExist from "@/src/hooks/useRedirectProtectedRoutes";
@@ -10,6 +10,7 @@ import { API_ENDPOINT } from "@@/utils/apis";
 import fetchAPI from "@@/utils/fetchAPI";
 import { ROUTES } from "@@/utils/routes";
 import useRedirect from "@@/hooks/useRedirect";
+import TextareaAutosize from "react-textarea-autosize";
 
 import "./create.scss";
 
@@ -27,8 +28,6 @@ export default function CreatePost() {
   const router = useRouter();
   const { user, loadjwt } = useAuth();
 
-  const [textareaHeight, setTextareaHeight] = useState("auto");
-
   const [title, setTitle] = useState<string>("");
   const [subTitle, setSubTitle] = useState<string>("");
   const [titleImg, setTitleImg] = useState<string>("");
@@ -38,18 +37,10 @@ export default function CreatePost() {
   const [author, setAuthor] = useState(user);
   const [currentDate, setCurrentDate] = useState(new Date().toISOString());
 
-  const handleInputChange = (e: any, setStateFunction: Function) => {
-    setTextareaHeight("auto");
-    setTextareaHeight(`${e.target.scrollHeight}px`);
-
-    // Automatically adjust textbox height to its content
-    if (e.target.tagName.toLowerCase() === "textarea") {
-      // Calculate the number of rows based on the content
-      const rows = e.target.value.split("\n").length;
-      // Set the rows attribute of the textarea
-      e.target.rows = rows;
-    }
-
+  const handleInputChange = (
+    e: ChangeEvent<HTMLTextAreaElement>,
+    setStateFunction: Function,
+  ) => {
     if (e.target.type === "checkbox") {
       setisPublish(e.target.checked);
       console.log(isPublish);
@@ -98,45 +89,36 @@ export default function CreatePost() {
         >
           <label htmlFor="title">
             Title* :
-            <textarea
+            <TextareaAutosize
               name="title"
-              id=""
-              cols={30}
-              rows={1}
               onChange={(e) => handleInputChange(e, setTitle)}
               required
-            ></textarea>
+            />
           </label>
           <label htmlFor="subTitle">
             Sub Title :
-            <textarea
-              name="subTitle"
-              id=""
-              cols={30}
-              rows={1}
+            <TextareaAutosize
+              name="title"
               onChange={(e) => handleInputChange(e, setSubTitle)}
-            ></textarea>
+              required
+            />
           </label>
           <label htmlFor="titleImg">
             Image URL :
-            <textarea
-              name="titleImg"
-              id=""
-              cols={30}
-              rows={1}
+            <TextareaAutosize
+              name="title"
               onChange={(e) => handleInputChange(e, setTitleImg)}
-            ></textarea>
+              required
+            />
           </label>
           <label htmlFor="content">
             Article* :
-            <textarea
+            <TextareaAutosize
               name="content"
-              id=""
-              cols={30}
-              rows={1}
               onChange={(e) => handleInputChange(e, setContent)}
+              minRows={3}
               required
-            ></textarea>
+            />
           </label>
           <label htmlFor="isPublished">
             publish

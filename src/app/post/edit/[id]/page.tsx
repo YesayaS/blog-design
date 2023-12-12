@@ -10,6 +10,7 @@ import useAuth from "@@/hooks/useAuth";
 import fetchAPI from "@@/utils/fetchAPI";
 import { ROUTES } from "@@/utils/routes";
 import TextareaAutosize from "react-textarea-autosize";
+import NotFound from "@/src/app/not-found";
 import ToggleSwitch from "@@/components/single-component/toggleSwitch/toggleSwitch";
 
 import "./edit.scss";
@@ -122,6 +123,10 @@ export default function CreatePost() {
       const id = response.id;
       router.push(`${ROUTES.POST}/${id}`);
     }
+  }
+
+  if (error) {
+    return <NotFound />;
   }
 
   return (

@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
+import he from "he";
 
 import useRedirectUserExist from "@/src/hooks/useRedirectProtectedRoutes";
 import ArticlePreview from "@@/app/post/[id]/article";
@@ -11,7 +12,7 @@ import { ROUTES } from "@@/utils/routes";
 import TextareaAutosize from "react-textarea-autosize";
 import ToggleSwitch from "@@/components/single-component/toggleSwitch/toggleSwitch";
 
-import "./create.scss";
+import "./edit.scss";
 
 interface Post {
   title: string;
@@ -23,9 +24,17 @@ interface Post {
 }
 
 export default function CreatePost() {
+  const decode = (text: string) => he.decode(text);
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("" as any);
+
   useRedirectUserExist(false, ROUTES.SIGNIN);
+
   const router = useRouter();
   const { user, loadjwt } = useAuth();
+
+  const { id } = useParams();
 
   const [title, setTitle] = useState<string>("");
   const [subTitle, setSubTitle] = useState<string>("");
@@ -35,6 +44,27 @@ export default function CreatePost() {
 
   const [author, setAuthor] = useState(user || { username: "" });
   const [currentDate, setCurrentDate] = useState(new Date().toISOString());
+
+  useEffect(() => {
+    const options = { method: "GET", "Content-Type": "application/json" };
+    const fetchPost = async () => {
+      const { response, error } = await fetchAPI(`/post/${id}`, options);
+      if (error) {
+        setError(error);
+        setLoading(false);
+      }
+
+      if (response) {
+        const post = response.post;
+        setTitle(post.title);
+        setSubTitle(post.sub_title);
+        setContent(post.content);
+        setisPublish(post.is_published);
+        setLoading(false);
+      }
+    };
+    fetchPost();
+  }, [id]);
 
   const [postPreview, setPostPreview] = useState({
     title: title,
@@ -75,10 +105,10 @@ export default function CreatePost() {
       is_published: isPublish,
     };
 
-    const apiPath = "/post";
+    const apiPath = `/post/${id}`;
     const jwt = loadjwt();
     const requestOptions: RequestInit = {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${jwt}`,
@@ -106,6 +136,7 @@ export default function CreatePost() {
             Title* :
             <TextareaAutosize
               name="title"
+              value={decode(title)}
               onChange={(e) => handleInputChange(e, setTitle)}
               required
             />
@@ -114,6 +145,7 @@ export default function CreatePost() {
             Sub Title :
             <TextareaAutosize
               name="subTitle"
+              value={decode(subTitle)}
               onChange={(e) => handleInputChange(e, setSubTitle)}
             />
           </label>
@@ -121,6 +153,7 @@ export default function CreatePost() {
             Image URL :
             <TextareaAutosize
               name="titleImg"
+              value={decode(titleImg)}
               onChange={(e) => handleInputChange(e, setTitleImg)}
             />
           </label>
@@ -128,6 +161,7 @@ export default function CreatePost() {
             Article* :
             <TextareaAutosize
               name="content"
+              value={decode(content)}
               onChange={(e) => handleInputChange(e, setContent)}
               minRows={3}
               required
@@ -141,7 +175,7 @@ export default function CreatePost() {
               onChange={(e: any) => handleInputChange(e, setisPublish)}
             />
           </label>
-          <button className="button-hover">Submit</button>
+          <button className="button-hover">Update</button>
         </form>
       </div>
       <div className="create-post__border"></div>

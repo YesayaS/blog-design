@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useContext, useState } from "react";
 import { DateTime } from "luxon";
+import he from "he";
 
 import { PostContext } from "./page";
 
@@ -16,39 +17,40 @@ interface Post {
 }
 
 export default function Article({ post }: { post: Post | null }) {
-  const [renderImage, setRenderImage] = useState(false);
   if (!post) return null;
 
   const { title, sub_title, title_img, content, author, publication_date } =
     post;
 
-  const authorUsername = author.username;
+  const decode = (text: string) => he.decode(text);
+
+  const decodeTitle = decode(title);
+  const decodeSubTitle = decode(sub_title);
+  const decodeTitleImgURL = decode(title_img);
+  const decodeContent = decode(content);
+  const decodeAuthorUsername = decode(author.username);
 
   return (
     <div className="article">
-      <div className="article__header">{title}</div>
-      <div className="article__sub-header">{sub_title}</div>
-      <div className="article__author">{authorUsername}</div>
+      <div className="article__header">{decodeTitle}</div>
+      <div className="article__sub-header ">{decodeSubTitle}</div>
+      <div className="article__author">{decodeAuthorUsername}</div>
       <div className="article__publish-date">{publication_date}</div>
-      <div className="article__img">
-        {title_img && renderImage && (
-          <Image
-            priority
-            src={title_img}
-            alt=""
-            fill
-            style={{ objectFit: "cover" }}
-            sizes="100vw"
-            onLoad={(e) => {
-              setRenderImage(true);
-            }}
-            onError={(e) => {
-              setRenderImage(false);
-            }}
-          />
-        )}
-      </div>
-      <div className="article__content">{content}</div>
+      {title_img && (
+        <>
+          <div className="article__img">
+            <Image
+              priority
+              src={decodeTitleImgURL}
+              alt=""
+              fill
+              style={{ objectFit: "cover" }}
+              sizes="100vw"
+            />
+          </div>
+        </>
+      )}
+      <div className="article__content">{decodeContent}</div>
     </div>
   );
 }

@@ -9,6 +9,7 @@ import OtherArticle from "./otherArticle";
 import Divider from "@/src/components/collections/lineDivider/lineDivider";
 import NotFound from "@/src/app/not-found";
 import Loading from "@/src/app/loading";
+import fetchAPI from "@@/utils/fetchAPI";
 
 import "./page.scss";
 
@@ -21,27 +22,23 @@ export default function Post() {
   const { id } = useParams();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`http://localhost:3000/api/post/${id}`);
-
-        if (!response.ok) {
-          setError(response.status);
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        setPostData(data.post);
+    const options = { method: "GET", "Content-Type": "application/json" };
+    const fetchPost = async () => {
+      const { response, error } = await fetchAPI(`/post/${id}`, options);
+      if (error) {
+        setError(error);
         setLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
+      }
+
+      if (response) {
+        setPostData(response.post);
+        setLoading(false);
       }
     };
-
-    fetchData();
+    fetchPost();
   }, [id]);
 
-  if (error === 404) {
+  if (error) {
     return <NotFound />;
   }
 

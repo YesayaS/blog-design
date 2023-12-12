@@ -1,16 +1,15 @@
 "use client";
 
-import { ChangeEvent, createContext, useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import useRedirectUserExist from "@/src/hooks/useRedirectProtectedRoutes";
 import ArticlePreview from "@@/app/post/[id]/article";
 import useAuth from "@@/hooks/useAuth";
-import { API_ENDPOINT } from "@@/utils/apis";
 import fetchAPI from "@@/utils/fetchAPI";
 import { ROUTES } from "@@/utils/routes";
-import useRedirect from "@@/hooks/useRedirect";
 import TextareaAutosize from "react-textarea-autosize";
+import ToggleSwitch from "@@/components/single-component/toggleSwitch/toggleSwitch";
 
 import "./create.scss";
 
@@ -37,16 +36,12 @@ export default function CreatePost() {
   const [author, setAuthor] = useState(user);
   const [currentDate, setCurrentDate] = useState(new Date().toISOString());
 
-  const handleInputChange = (
-    e: ChangeEvent<HTMLTextAreaElement>,
-    setStateFunction: Function,
-  ) => {
+  const handleInputChange = (e: any, setStateFunction: Function) => {
     if (e.target.type === "checkbox") {
-      setisPublish(e.target.checked);
-      console.log(isPublish);
-      return;
+      setStateFunction(e.target.checked as any);
+    } else {
+      setStateFunction(e.target.value as any);
     }
-    setStateFunction(e.target.value);
   };
 
   async function submitPost(e: any) {
@@ -100,7 +95,6 @@ export default function CreatePost() {
             <TextareaAutosize
               name="title"
               onChange={(e) => handleInputChange(e, setSubTitle)}
-              required
             />
           </label>
           <label htmlFor="titleImg">
@@ -108,7 +102,6 @@ export default function CreatePost() {
             <TextareaAutosize
               name="title"
               onChange={(e) => handleInputChange(e, setTitleImg)}
-              required
             />
           </label>
           <label htmlFor="content">
@@ -120,17 +113,16 @@ export default function CreatePost() {
               required
             />
           </label>
-          <label htmlFor="isPublished">
-            publish
-            <input
-              type="checkbox"
-              name="isPublished"
-              id=""
+
+          <label htmlFor="content">
+            {" "}
+            Publish :
+            <ToggleSwitch
               checked={isPublish}
-              onChange={(e) => handleInputChange(e, setisPublish)}
-            ></input>
+              onChange={(e: any) => handleInputChange(e, setisPublish)}
+            />
           </label>
-          <button>Submit</button>
+          <button className="button-hover">Submit</button>
         </form>
       </div>
       <div className="create-post__border"></div>

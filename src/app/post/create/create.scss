@@ -33,7 +33,9 @@
         resize: none;
         overflow: hidden;
         outline: 1px var(--color-text-primary-25) solid;
-        border-radius: 4px;
+        &:focus {
+          outline: 1px var(--color-text-primary-90) solid;
+        }
       }
     }
   }

@@ -4,6 +4,7 @@ import useAuth from "@@/hooks/useAuth";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { ROUTES } from "@@/utils/routes";
 
 export default function SignedIn() {
   const route = useRouter();
@@ -16,6 +17,10 @@ export default function SignedIn() {
 
   const handleMouseLeave = () => {
     setDropdownVisible(false);
+  };
+
+  const myPost = () => {
+    route.push(ROUTES.MY_POST);
   };
 
   const logout = () => {
@@ -35,6 +40,7 @@ export default function SignedIn() {
             </button>
             {isDropdownVisible && (
               <div className="dropdown-content">
+                <button onClick={myPost}>My posts</button>
                 <button onClick={logout}>Log out</button>
               </div>
             )}

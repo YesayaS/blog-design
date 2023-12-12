@@ -3,4 +3,5 @@ export const ROUTES = {
   SIGNIN: "/signin",
   POST: "/post",
   CREATE_POST: "/create",
+  MY_POST: "/mypost",
 };

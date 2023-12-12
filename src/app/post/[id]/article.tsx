@@ -18,7 +18,6 @@ interface Post {
 
 export default function Article({ post }: { post: Post | null }) {
   if (!post) return null;
-
   const { title, sub_title, title_img, content, author, publication_date } =
     post;
 
@@ -30,13 +29,17 @@ export default function Article({ post }: { post: Post | null }) {
   const decodeContent = decode(content);
   const decodeAuthorUsername = decode(author.username);
 
+  const isValidImageUrl =
+    decodeTitleImgURL &&
+    /^(ftp|http|https):\/\/[^ "]+$/.test(decodeTitleImgURL);
+
   return (
     <div className="article">
       <div className="article__header">{decodeTitle}</div>
       <div className="article__sub-header ">{decodeSubTitle}</div>
       <div className="article__author">{decodeAuthorUsername}</div>
       <div className="article__publish-date">{publication_date}</div>
-      {title_img && (
+      {isValidImageUrl && (
         <>
           <div className="article__img">
             <Image
@@ -45,7 +48,7 @@ export default function Article({ post }: { post: Post | null }) {
               alt=""
               fill
               style={{ objectFit: "cover" }}
-              sizes="100vw"
+              sizes="(max-width: 50vw) 50vw, 100vw"
             />
           </div>
         </>

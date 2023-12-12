@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import useRedirectUserExist from "@/src/hooks/useRedirectProtectedRoutes";
@@ -33,8 +33,28 @@ export default function CreatePost() {
   const [content, setContent] = useState<string>("");
   const [isPublish, setisPublish] = useState<boolean>(true);
 
-  const [author, setAuthor] = useState(user);
+  const [author, setAuthor] = useState(user || { username: "" });
   const [currentDate, setCurrentDate] = useState(new Date().toISOString());
+
+  const [postPreview, setPostPreview] = useState({
+    title: title,
+    sub_title: subTitle,
+    title_img: titleImg,
+    content: content,
+    author: author,
+    publication_date: currentDate,
+  });
+
+  useEffect(() => {
+    setPostPreview({
+      title: title,
+      sub_title: subTitle,
+      title_img: titleImg,
+      content: content,
+      author: author,
+      publication_date: currentDate,
+    });
+  }, [title, subTitle, titleImg, content, author, currentDate]);
 
   const handleInputChange = (e: any, setStateFunction: Function) => {
     if (e.target.type === "checkbox") {
@@ -129,7 +149,7 @@ export default function CreatePost() {
       <div className="create-post__preview-wrapper">
         <h1 className="create-post__preview-wrapper__header">Preview</h1>
         <div className="create-post__preview-wrapper container-border">
-          {/* <ArticlePreview post={postPreview} /> */}
+          <ArticlePreview post={postPreview} />
         </div>
       </div>
     </div>

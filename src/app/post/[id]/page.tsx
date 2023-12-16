@@ -50,8 +50,6 @@ export default function Post() {
         <Article post={postData} />
         <Divider />
         <CommentSection />
-        <Divider />
-        <OtherArticle />
       </PostContext.Provider>
     </div>
   );

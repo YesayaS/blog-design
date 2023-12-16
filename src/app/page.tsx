@@ -9,8 +9,6 @@ import "./home.scss";
 export default function Home() {
   return (
     <div className="home">
-      <Trending />
-      <Divider />
       <Latest />
       <Divider />
       <BeAuthor />

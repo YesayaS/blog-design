@@ -31,10 +31,24 @@ export default function MyPost() {
       const { response, error } = await fetchAPI("/mypost", options);
 
       if (response) setPosts(response.posts);
-      console.log(response.posts[0]);
     };
     fetchData();
   }, [loadjwt]);
+
+  const deletePost = async (id: string) => {
+    const jwt = loadjwt();
+    const options = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwt}`,
+      },
+    };
+    const { response, error } = await fetchAPI(`/post/${id}`, options);
+    if (response) {
+      window.location.reload();
+    }
+  };
 
   if (!posts) return <p>load</p>;
 
@@ -73,7 +87,7 @@ export default function MyPost() {
                 Edit
               </Link>
               <Link href={``} className="my-post__modifier__button">
-                Delete
+                <button onClick={() => deletePost(post._id)}>Delete</button>
               </Link>
             </div>
           </div>

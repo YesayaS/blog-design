@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import useRedirectUserExist from "@/src/hooks/useRedirectProtectedRoutes";
+import useRedirectProtectedRoutes from "@/src/hooks/useRedirectProtectedRoutes";
 import ArticlePreview from "@@/app/post/[id]/article";
 import useAuth from "@@/hooks/useAuth";
 import fetchAPI from "@@/utils/fetchAPI";
@@ -23,7 +23,7 @@ interface Post {
 }
 
 export default function CreatePost() {
-  useRedirectUserExist(false, ROUTES.SIGNIN);
+  useRedirectProtectedRoutes(false, ROUTES.SIGNIN);
   const router = useRouter();
   const { user, loadjwt } = useAuth();
 

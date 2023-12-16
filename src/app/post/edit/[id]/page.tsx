@@ -49,7 +49,7 @@ export default function CreatePost() {
   useEffect(() => {
     const options = { method: "GET", "Content-Type": "application/json" };
     const fetchPost = async () => {
-      const { response, error } = await fetchAPI(`/post/${id}`, options);
+      const { response, error } = await fetchAPI(`/post/edit/${id}`, options);
       if (error) {
         setError(error);
         setLoading(false);

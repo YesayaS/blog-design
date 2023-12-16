@@ -8,8 +8,6 @@ export default function CardList({ postData }: { postData: any }) {
   const { _id, title, sub_title, title_img, publication_date, author } =
     postData;
 
-  console.log(_id, title, sub_title, title_img, publication_date, author);
-
   const isValidImageUrl =
     title_img && /^(ftp|http|https):\/\/[^ "]+$/.test(decode(title_img));
 

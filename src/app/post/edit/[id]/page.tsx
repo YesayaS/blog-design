@@ -47,7 +47,14 @@ export default function CreatePost() {
   const [currentDate, setCurrentDate] = useState(new Date().toISOString());
 
   useEffect(() => {
-    const options = { method: "GET", "Content-Type": "application/json" };
+    const jwt = loadjwt();
+    const options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwt}`,
+      },
+    };
     const fetchPost = async () => {
       const { response, error } = await fetchAPI(`/post/edit/${id}`, options);
       if (error) {
@@ -65,7 +72,7 @@ export default function CreatePost() {
       }
     };
     fetchPost();
-  }, [id]);
+  }, [id, loadjwt]);
 
   const [postPreview, setPostPreview] = useState({
     title: title,

@@ -9,6 +9,7 @@ import Link from "next/link";
 import he from "he";
 
 import "./myPost.scss";
+import { formatISODate } from "@/src/utils/utils";
 
 export default function MyPost() {
   const decode = (text: string) => he.decode(text);
@@ -72,7 +73,7 @@ export default function MyPost() {
                   {decode(post.sub_title)}
                 </p>
                 <p className="my-post__data__publish-date truncate">
-                  {post.publication_date}
+                  {formatISODate(post.publication_date)}
                 </p>
                 <p className="my-post__data__is-publish truncate">
                   {post.is_published ? "Publish" : "Not Publish"}

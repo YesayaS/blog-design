@@ -6,6 +6,7 @@ import he from "he";
 import { PostContext } from "./page";
 
 import "./article.scss";
+import { formatISODate } from "@/src/utils/utils";
 
 interface Post {
   title: string;
@@ -38,7 +39,9 @@ export default function Article({ post }: { post: Post | null }) {
       <div className="article__header">{decodeTitle}</div>
       <div className="article__sub-header ">{decodeSubTitle}</div>
       <div className="article__author">{decodeAuthorUsername}</div>
-      <div className="article__publish-date">{publication_date}</div>
+      <div className="article__publish-date">
+        {formatISODate(publication_date)}
+      </div>
       {isValidImageUrl && (
         <>
           <div className="article__img">

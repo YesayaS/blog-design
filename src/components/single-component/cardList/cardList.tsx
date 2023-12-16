@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import "./cardList.scss";
-import { decode } from "@/src/utils/utils";
+import { decode, formatISODate } from "@/src/utils/utils";
 
 export default function CardList({ postData }: { postData: any }) {
   const { _id, title, sub_title, title_img, publication_date, author } =
@@ -31,7 +31,9 @@ export default function CardList({ postData }: { postData: any }) {
           <p className="card-list__detail__sub-header truncate">
             {decode(sub_title)}
           </p>
-          <p className="card-list__detail__publish-date">{publication_date}</p>
+          <p className="card-list__detail__publish-date">
+            {formatISODate(publication_date)}
+          </p>
         </div>
       </div>
     </Link>

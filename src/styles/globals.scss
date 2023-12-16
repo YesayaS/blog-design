@@ -80,17 +80,6 @@ a:visited {
   text-decoration: none;
 }
 
-.button-hover {
-  padding: 0.3rem;
-  border: 1px var(--primary-color) solid;
-  transition: all 0.1s;
-
-  &:hover {
-    transform: translateX(-5px) translateY(-5px);
-    box-shadow: 5px 5px 1px 0px;
-  }
-}
-
 .content {
   display: flex;
   justify-content: center;

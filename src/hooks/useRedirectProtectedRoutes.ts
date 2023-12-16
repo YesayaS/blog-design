@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import useAuth from "@@/hooks/useAuth";
 
 export default function useRedirectProtectedRoutes(
-  userExist: boolean,
+  userExist: boolean, // false : redir user exist, true : redir user not exist
   redirectRoutes: string,
 ) {
   const router = useRouter();

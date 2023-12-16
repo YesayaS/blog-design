@@ -7,6 +7,7 @@ import CardList from "@/src/components/single-component/cardList/cardList";
 import "./latest.scss";
 import { useEffect, useState } from "react";
 import fetchAPI from "@/src/utils/fetchAPI";
+import CustomLoading from "@@/app/loading";
 
 export default function Latest() {
   const [posts, setPosts] = useState(null);
@@ -29,6 +30,8 @@ export default function Latest() {
     };
     fetchPost();
   }, []);
+
+  if (loading) return <CustomLoading />;
 
   if (!posts) return <p>load</p>;
 

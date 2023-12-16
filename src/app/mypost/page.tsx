@@ -10,6 +10,7 @@ import he from "he";
 
 import "./myPost.scss";
 import { formatISODate } from "@/src/utils/utils";
+import CustomLoading from "@@/app/loading";
 
 export default function MyPost() {
   const decode = (text: string) => he.decode(text);
@@ -17,6 +18,7 @@ export default function MyPost() {
   useRedirectProtectedRoutes(false, ROUTES.SIGNIN);
   const { user, loadjwt } = useAuth();
 
+  const [loading, setLoading] = useState<boolean>(true);
   const [posts, setPosts] = useState<Array<any> | null>(null);
 
   useEffect(() => {
@@ -34,6 +36,7 @@ export default function MyPost() {
       if (response) setPosts(response.posts);
     };
     fetchData();
+    setLoading(false);
   }, [loadjwt]);
 
   const deletePost = async (id: string) => {
@@ -51,7 +54,8 @@ export default function MyPost() {
     }
   };
 
-  if (!posts) return <p>load</p>;
+  if (!posts) return null;
+  if (loading) return <CustomLoading />;
 
   return (
     <div className="my-post">
